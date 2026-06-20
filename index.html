@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عيد ميلاد سعيد يا آية! 🎉</title>
+    <style>
+        :root {
+            --primary-color: #ff4a75;
+            --secondary-color: #ff8da1;
+            --bg-color: #ffeef2;
+            --dark-text: #4a1521;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--dark-text);
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* تأثير تناثر القصاصات (Confetti) */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            position: absolute;
+            top: -10px;
+            z-index: 999;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(105vh) rotate(360deg);
+            }
+        }
+
+        header {
+            text-align: center;
+            margin-top: 50px;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: var(--primary-color);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 60px;
+            padding: 20px;
+        }
+
+        /* 1. بطاقة المعايدة القابلة للقلب (Flip Card) */
+        .card-container {
+            perspective: 1000px;
+            width: 350px;
+            height: 450px;
+            cursor: pointer;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 15px 35px rgba(255, 74, 117, 0.2);
+            border-radius: 20px;
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .card-front img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid white;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+
+        .card-back {
+            background: white;
+            color: var(--dark-text);
+            transform: rotateY(180deg);
+            border: 3px solid var(--secondary-color);
+            text-align: center;
+        }
+
+        /* 2. أنيميشن المغلف والرسالة (Envelope & Letter) */
+        .envelope-wrapper {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background-color: #f3a6b4;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            margin-top: 100px;
+        }
+
+        .envelope-wrapper::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 100px solid #ff4a75;
+            transform-origin: top;
+            transition: transform 0.4s ease-in-out;
+            z-index: 3;
+        }
+
+        .envelope-wrapper.open::before {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .letter {
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+            width: 280px;
+            height: 180px;
+            background-color: white;
+            border-radius: 5px;
+            padding: 15px;
+            box-sizing: border-box;
+            transition: transform 0.6s ease-in-out;
+            z-index: 2;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .envelope-wrapper.open .letter {
+            transform: translateY(-120px);
+            height: auto;
+            z-index: 4;
+        }
+
+        /* زر تفاعلي للموسيقى */
+        .music-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="music-btn" onclick="toggleMusic()">🎵</button>
+    <audio id="bg-music" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
+    <header>
+        <h1>عيد ميلاد سعيد، آية! 🎂✨</h1>
+        <p>اضغطي على العناصر بالأسفل لاكتشاف المفاجآت والرسائل السرية</p>
+    </header>
+
+    <div class="container">
+        
+        <div class="card-container" onclick="flipCard(this)">
+            <div class="card" id="birthday-card">
+                <div class="card-front">
+                    <img src="aya1.jpg" alt="صورة آية">
+                    <h2>العمر كله ليكِ يا آية! ❤️</h2>
+                    <p>انقري لفتح بطاقة المعايدة ✨</p>
+                </div>
+                <div class="card-back">
+                    <h2>كل عام وأنتِ بألف خير 🎉</h2>
+                    <p>إلى آية.. الجميلة قلباً وقصداً، أتمنى أن تحمل لكِ هذه السنة الجديدة من عمركِ ألواناً من الفرح، وتحقيقاً لكل الأمنيات التي يسكنها قلبكِ. دمتِ ضياءً لمن حولك.</p>
+                    <p style="color: var(--primary-color); font-weight: bold;">بكل حب وأمنيات السعادة 🎀</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="envelope-wrapper" onclick="toggleEnvelope(this)">
+            <div class="letter">
+                <h3>تبريكات من القلب لـ آية ✉️</h3>
+                <p>يا شبيهة الورد يا أجمل أمنيات العام الجديد، كل عام وضحتكِ تملأ الدنيا بهجة، وكل عام وأنتِ محاطة بالسلام والنجاح والتوفيق الدائم في حياتكِ.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function flipCard(cardContainer) {
+            const card = cardContainer.querySelector('.card');
+            card.classList.toggle('flipped');
+            createConfetti();
+        }
+
+        function toggleEnvelope(envelope) {
+            envelope.classList.toggle('open');
+        }
+
+        function toggleMusic() {
+            const music = document.getElementById('bg-music');
+            const btn = document.querySelector('.music-btn');
+            if (music.paused) {
+                music.play();
+                btn.innerText = "⏸️";
+            } else {
+                music.pause();
+                btn.innerText = "🎵";
+            }
+        }
+
+        function createConfetti() {
+            const colors = ['#ff4a75', '#ff8da1', '#ffd1d9', '#ffbe0b', '#ff006e', '#8338ec'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0px';
+                document.body.appendChild(confetti);
+
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+        window.onload = createConfetti;
+    </script>
+</body>
+</html>
